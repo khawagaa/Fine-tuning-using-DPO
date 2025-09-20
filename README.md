@@ -1,76 +1,54 @@
-# Direct Preference Optimization (DPO) with Hugging Face
+# README
 
-This project demonstrates how to apply **Direct Preference Optimization (DPO)** using Hugging Face’s ecosystem.  
-DPO is a reinforcement learning–free method for aligning large language models with human preferences.  
-Instead of relying on traditional RLHF (Reinforcement Learning with Human Feedback), DPO optimizes models directly with pairwise preference data, making it simpler and more efficient.
+## Introduction
+This project demonstrates **Direct Preference Optimization (DPO)** using the Hugging Face `trl` library.  
+DPO is a method designed to directly optimize **large language models (LLMs)** based on **human preference data**, improving their alignment with user expectations without requiring reinforcement learning from scratch.
 
----
+Unlike traditional methods such as **Proximal Policy Optimization (PPO)**, DPO simplifies the training pipeline by directly optimizing the likelihood ratio between preferred and non-preferred responses.  
 
-## 📌 Project Overview
-
-1. **Objective**  
-   Fine-tune a pretrained language model using DPO, enabling it to better align with human preferences without the complexity of reinforcement learning.
-
-2. **Dataset**  
-   - Uses preference-labeled data (pairs of "chosen" vs "rejected" responses).  
-   - Demonstrates how to format, preprocess, and integrate such data with Hugging Face’s training pipeline.  
-
-3. **Method**  
-   - Start with a base model from Hugging Face Hub.  
-   - Apply Direct Preference Optimization (DPO).  
-   - Evaluate improvements in model alignment.  
+By completing this lab, you gain hands-on experience in:
+- Formatting datasets for DPO.  
+- Implementing optimization with Hugging Face’s `trl` library.  
+- Fine-tuning LLMs for preference alignment.  
+- Evaluating improvements before and after DPO training.  
 
 ---
 
-## ⚙️ Installation
+## Implementation
+1. **Setup**  
+   - Installed required dependencies (`transformers`, `trl`, `datasets`, `bitsandbytes` for optional quantization).  
+   - Imported libraries for model loading, training, and evaluation.  
 
-Make sure you have Python 3.8+ installed. Then install dependencies:
+2. **Model and Tokenizer Configuration**  
+   - Loaded a pretrained language model from Hugging Face Hub.  
+   - Configured the tokenizer to handle text preprocessing.  
+   - (Optional) Used **quantized model configuration** with `bitsandbytes` for memory-efficient training.  
 
-```bash
-pip install torch transformers datasets accelerate peft trl
-📂 Files in This Repo
-Lab_Direct_Preference_Optimization_(DPO)_using_Hugging_Face_solution.ipynb
-Jupyter notebook with the full workflow: dataset loading, preprocessing, DPO training, and evaluation.
+3. **Dataset Preparation**  
+   - Created a dataset including **pairs of responses**: one preferred by humans, one not preferred.  
+   - Preprocessed the dataset into the format required by the `trl` library for DPO training.  
 
-README.md
-You’re reading it. Provides documentation for setup and usage.
+4. **DPO Configuration**  
+   - Defined training arguments such as learning rate, batch size, and optimization steps.  
+   - Configured the **DPO trainer** with the model, tokenizer, and dataset.  
 
-🚀 Usage
-Clone the repository:
+5. **Training with DPO**  
+   - Ran fine-tuning using the DPO trainer.  
+   - Trained either the **full model** or a **LoRA-adapted version** for efficiency.  
 
-bash
-Copy code
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
-Open the notebook:
+6. **Evaluation**  
+   - Compared model responses **before and after DPO fine-tuning**.  
+   - Evaluated alignment improvements by checking whether the model better matched human-preferred outputs.  
 
-bash
-Copy code
-jupyter notebook Lab_Direct_Preference_Optimization_(DPO)_using_Hugging_Face_solution.ipynb
-Run cells step by step to:
+---
 
-Load dataset
+## Conclusion
+This lab highlights the effectiveness of **Direct Preference Optimization (DPO)** for aligning large language models with human expectations.  
 
-Format preference pairs
+Key takeaways:  
+- DPO simplifies preference optimization compared to reinforcement learning–based methods like PPO.  
+- Human preference data, when formatted properly, can significantly improve LLM outputs.  
+- LoRA and quantized models allow efficient fine-tuning without requiring massive GPU resources.  
+- The trained model demonstrates measurable improvements in **alignment with user-preferred responses**.  
 
-Fine-tune with DPO
-
-Evaluate results
-
-📊 Expected Results
-The model should demonstrate improved alignment with human-preferred outputs compared to baseline.
-
-Performance can be measured by evaluating generated outputs or via preference accuracy on a held-out test set.
-
-🔮 Future Work
-Experiment with different base models from Hugging Face Hub.
-
-Scale to larger preference datasets for stronger alignment.
-
-Compare DPO with RLHF approaches.
-
-📜 References
-Hugging Face TRL library: https://huggingface.co/docs/trl
-
-Original DPO paper: Direct Preference Optimization: Your Language Model is Secretly a Reward Model
-
+This makes DPO a practical and scalable method for fine-tuning LLMs in real-world applications where **user alignment** is critical.  
